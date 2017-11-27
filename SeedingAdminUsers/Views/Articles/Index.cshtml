@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SeedingAdminUsers.Models.Article>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Articles</h2>
+<p>
+    <div class= "searchBox">
+        <div>@Html.Partial("_Search")
+        </div>
+    </div>
+</p>
+<p>
+@if ((User.Identity.IsAuthenticated) && (User.IsInRole("Admin")))
+{
+    @Html.ActionLink("Create New Article", "Create")
+}
+</p>
+
+    
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <h1>@Html.DisplayFor(modelItem => item.ArticleTitle)</h1>
+        <p>@Html.DisplayFor(modelItem => item.ArticleDescription)</p>
+        <h5>@Html.DisplayFor(modelItem => item.UserName)</h5>
+
+        <div>
+            <span class="badge">Posted @Html.DisplayFor(modelItem => item.PublishDate)</span><div class="pull-right">
+
+                <span class="label">
+                    @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Admin")))
+                    {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArticleID })
+                    }|
+                    @Html.ActionLink("Details", "Details", new { id = item.ArticleID }) |
+                    @if ((User.Identity.IsAuthenticated) && (User.IsInRole("Admin")))
+                    {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ArticleID })
+                    }
+                </span>
+
+            </div>
+        </div>
+        <hr>
+    </div>
+}

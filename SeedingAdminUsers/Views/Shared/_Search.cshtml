@@ -1,0 +1,10 @@
+﻿@using (Html.BeginForm("Index", "Articles", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <b>Search </b>  @Html.TextBox("Search")<input type="submit" value="Search" />
+
+    </div>
+}
+

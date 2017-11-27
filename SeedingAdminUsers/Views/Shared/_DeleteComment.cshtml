@@ -1,0 +1,56 @@
+﻿@model SeedingAdminUsers.Models.Comment
+
+
+  
+
+<h3>Are you sure you want to delete this?</h3>
+
+<div>
+    @using (Html.BeginForm("DeleteComment", "Articles"))
+{
+    <h4>Comments</h4>
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.CommentID)
+        @Html.HiddenFor(model => model.ArticleID)
+        <dt>
+            @Html.DisplayNameFor(model => model.ArticleID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArticleID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentBody)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentBody)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+    </dl>
+
+ 
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+
