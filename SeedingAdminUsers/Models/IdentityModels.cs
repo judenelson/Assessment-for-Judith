@@ -49,6 +49,16 @@ namespace SeedingAdminUsers.Models
         public DbSet<Article> Articles { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+            modelBuilder.Entity<Article>().ToTable("Articles");
+            modelBuilder.Entity<Comment>().ToTable("Comments");
+            base.OnModelCreating(modelBuilder);
+        }
+
+
+
         public System.Data.Entity.DbSet<SeedingAdminUsers.ViewModels.UserViewModel> UserViewModels { get; set; }
     }
 }
