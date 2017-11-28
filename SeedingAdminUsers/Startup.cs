@@ -9,6 +9,7 @@ namespace SeedingAdminUsers
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            SeedAdminUsers();
         }
     }
 }

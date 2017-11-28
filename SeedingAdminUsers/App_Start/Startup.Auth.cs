@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using SeedingAdminUsers.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SeedingAdminUsers
 {
@@ -64,5 +65,45 @@ namespace SeedingAdminUsers
             //    ClientSecret = ""
             //});
         }
+
+        public void SeedAdminUsers()
+        {
+            var context = new ApplicationDbContext();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
+            if (!roleManager.RoleExists("Admin"))
+            {
+
+                // first we create Admin role  
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+
+                var role2 = new IdentityRole();
+                role2.Name = "Limited";
+                roleManager.Create(role2);
+            }
+
+            //Here we create a Admin  user who will maintain the website
+            var adminuser = new ApplicationUser();
+            adminuser.UserName = "admin@gmail.com";
+            adminuser.Email = "admin@gmail.com";
+            string userPWD = "Admin!30";
+            adminuser.IsAdmin = true;
+            adminuser.FirstName = "Abel";
+            adminuser.LastName = "Toth";
+            var chkUser = UserManager.Create(adminuser, userPWD);
+
+            //Add admin User to Role Admin   
+            if (chkUser.Succeeded)
+            {
+                var result1 = UserManager.AddToRole(adminuser.Id, "admin");
+            }
+
+
+
+        }
+
     }
 }
